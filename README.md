@@ -40,7 +40,7 @@ La autorización del grupo también se valida en AppSync; ocultar acciones en la
 
 ## Despliegue con Amplify Hosting
 
-Conecta el repositorio y la rama en Amplify Hosting. El `amplify.yml` despliega primero el backend con `ampx pipeline-deploy` y después exporta la aplicación web a `dist/`. La aplicación debe tener permisos de despliegue backend para la rama configurados en Amplify Hosting.
+Conecta el repositorio y la rama en Amplify Hosting. El `amplify.yml` instala dependencias con `npm install` (para reconciliar el lockfile), despliega el backend con `ampx pipeline-deploy` y después exporta la aplicación web a `dist/`. La aplicación debe tener permisos de despliegue backend para la rama configurados en Amplify Hosting.
 
 También puedes generar una exportación web local después de iniciar el sandbox:
 
