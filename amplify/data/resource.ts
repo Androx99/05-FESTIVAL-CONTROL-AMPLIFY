@@ -1,8 +1,7 @@
 import { a, defineData, type ClientSchema } from '@aws-amplify/backend';
-import { eventStatuses } from '../../src/data';
 
 const schema = a.schema({
-  EventStatus: a.enum([...eventStatuses]),
+  EventStatus: a.enum(['CONFIRMED', 'DELAYED', 'CANCELLED']),
   FestivalEvent: a.model({
     code: a.string().required(),
     artist: a.string().required(),
