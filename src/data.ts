@@ -5,4 +5,5 @@ export const initialEvents: FestivalEvent[] = [
   { id: 'EVT-102', artist: 'MIDNIGHT SESSION', space: 'GARDEN', time: '23:15', status: 'DELAYED' },
   { id: 'EVT-103', artist: 'ELECTRIC SUNSET', space: 'MAIN STAGE', time: '20:15', status: 'CONFIRMED' },
   { id: 'EVT-104', artist: 'BASS THEORY', space: 'WAREHOUSE', time: '00:30', status: 'CONFIRMED' },
+  { id: 'EVT-105', artist: 'DOWN BY THE RIVEEER', space: 'RIVER STAGE', time: '12:00', status: 'DELAYED' },
 ];
