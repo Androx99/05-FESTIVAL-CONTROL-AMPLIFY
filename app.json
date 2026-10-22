@@ -1,0 +1,18 @@
+{
+  "expo": {
+    "name": "Festival Control",
+    "slug": "festival-control",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "web": {
+      "bundler": "metro",
+      "output": "single",
+      "name": "Festival Control",
+      "shortName": "Festival Control"
+    },
+    "experiments": {
+      "tsconfigPaths": true
+    }
+  }
+}
