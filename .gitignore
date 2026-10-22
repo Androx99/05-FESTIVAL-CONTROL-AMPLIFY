@@ -1,1 +1,5 @@
 node_modules
+.expo
+dist
+amplify_outputs*.json
+public/amplify_outputs.json

@@ -1,33 +1,53 @@
-# FESTIVAL CONTROL · React Native + Expo Web
+# FESTIVAL CONTROL · Expo Web + AWS Amplify Gen 2
 
-Demo **frontend-only** para la charla de AWS Amplify. Mantiene la identidad visual del cuaderno 04-PILARES-SERVERLESS: fondo `#090909`, cards `#151515`, acento `#FF2F92`, confirmado `#39D98A` y retrasado `#F5C542`.
+Aplicación web para consultar la programación de un festival y administrarla con autorización. Amplify Data proporciona una API GraphQL de AWS AppSync y una tabla Amazon DynamoDB; Amplify Auth usa Amazon Cognito.
 
-## Inicio rápido
+## Permisos
+
+- Cualquier visitante puede leer los eventos.
+- Sólo los usuarios del grupo Cognito `Admins` pueden crear, editar, cambiar el estado o eliminar eventos.
+- El registro público está deshabilitado. El acceso de administración se provisiona desde Cognito.
+- La clave de API pública se configura para 365 días. Amplify la renueva al desplegar el backend; programa un despliegue al menos una vez al año.
+
+## Desarrollo local
+
+Necesitas Node.js, una cuenta AWS y credenciales configuradas localmente para AWS (por ejemplo, `aws configure` o un perfil SSO).
 
 ```bash
 npm install
-npx expo install --fix
-npm run web
+npm run sandbox
 ```
 
-## Exportación para AWS Amplify Hosting
+El sandbox despliega los recursos en AWS y genera `amplify_outputs.json` en la raíz. Ese archivo no se versiona. En otra terminal:
+
+```bash
+npm run web
+npm run typecheck
+```
+
+Para detener el sandbox, pulsa `Ctrl+C`. Al terminar de usar el sandbox, confirma su eliminación si quieres borrar los recursos temporales de AWS.
+
+## Invitar administradores
+
+Después de desplegar el backend:
+
+1. En AWS Console, abre Amazon Cognito y el grupo de usuarios creado por Amplify.
+2. Crea un usuario invitado con su correo electrónico y contraseña temporal.
+3. Añade ese usuario al grupo `Admins`.
+4. El administrador inicia sesión desde **ACCESO ADMIN**. La aplicación permite establecer una contraseña nueva si Cognito exige cambiar la temporal.
+
+La autorización del grupo también se valida en AppSync; ocultar acciones en la interfaz no es la única barrera de acceso.
+
+## Despliegue con Amplify Hosting
+
+Conecta el repositorio y la rama en Amplify Hosting. El `amplify.yml` despliega primero el backend con `ampx pipeline-deploy` y después exporta la aplicación web a `dist/`. La aplicación debe tener permisos de despliegue backend para la rama configurados en Amplify Hosting.
+
+También puedes generar una exportación web local después de iniciar el sandbox:
 
 ```bash
 npm run build:web
 ```
 
-El resultado estático se genera en `dist/`. En Amplify: conectar GitHub, rama `main`, usar `amplify.yml` y publicar `dist/`. No requiere AWS Academy, Lambda ni API Gateway.
+## Modelo de datos
 
-## Prueba de alumno
-
-1. Abrir **Eventos** y filtrar por escenario o artista.
-2. Crear `TECHNO TITANS`, escenario `MAIN STAGE`, hora `21:45` y estado `CONFIRMED`.
-3. Editar el evento y cambiar la hora a `23:00`.
-4. Cambiar el estado a `DELAYED`.
-5. Eliminar el evento.
-
-**Datos simulados en memoria:** los cambios se pierden al recargar la página. Las operaciones no son HTTP reales. Para probar el despliegue automático, cambiar el subtítulo de la aplicación, hacer commit y push y observar el nuevo build en Amplify.
-
-## Referencia docente
-
-https://github.com/albertohdezakkari/04-PILARES-SERVERLESS
+`FestivalEvent` almacena código, artista, escenario, hora y estado (`CONFIRMED`, `DELAYED` o `CANCELLED`). DynamoDB persiste los datos entre sesiones; el API entrega registros con un identificador generado por el backend.

@@ -4,12 +4,14 @@
   "private": true,
   "main": "expo/AppEntry",
   "scripts": {
-    "start": "expo start",
-    "web": "expo start --web",
-    "build:web": "expo export --platform web",
+    "start": "node scripts/prepare-amplify-outputs.js && expo start",
+    "web": "node scripts/prepare-amplify-outputs.js && expo start --web",
+    "build:web": "node scripts/prepare-amplify-outputs.js && expo export --platform web",
+    "sandbox": "ampx sandbox",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "aws-amplify": "^6.22.2",
     "expo": "~54.0.0",
     "expo-status-bar": "~3.0.9",
     "react": "19.1.0",
@@ -18,6 +20,8 @@
     "react-native-web": "^0.21.0"
   },
   "devDependencies": {
+    "@aws-amplify/backend": "^1.25.1",
+    "@aws-amplify/backend-cli": "^1.10.0",
     "@types/react": "~19.1.10",
     "typescript": "~5.9.2"
   }
